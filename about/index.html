@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        使用Jenkins搭建Android自动化构建--配置篇--windows｜Caption·Deng&#39;s blog
+        about｜Caption·Deng&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://ghdeng.github.io/2016/08/29/20160830/">
+    <link rel="canonical" href="http://ghdeng.github.io/about/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -133,184 +133,187 @@
 </script>
 
 <!-- Main Content -->
-
-<!--only post-->
-
-
-<img class="wechat-title-img"
-     src="http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg3.png">
-
-
 <style>
-    
-    header.intro-header {
-        background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg3.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    .intro-header .site-heading {
+        margin: 50px;
     }
-
-    
 </style>
 
+<!-- Page Header -->
 <header class="intro-header">
     <div class="container">
         <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>使用Jenkins搭建Android自动化构建--配置篇--windows</h1>
-                    
-                    <span class="meta">
-                         作者 Caption Deng
-                        <span>
-                          日期 2016-08-29
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Jenkins"
-                           title="Jenkins">Jenkins</a>
-                        
-                    </div>
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 ">
+                <div class="site-heading text-center">
+                    <h1>about</h1>
+                    <span class="subheading">每一个不满意的现在都有一个没有努力的曾经！</span>
                 </div>
             </div>
         </div>
-    </div>
-    <div class="post-title-haojen">
-        <span>
-            使用Jenkins搭建Android自动化构建--配置篇--windows
-        </span>
     </div>
 </header>
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>#使用Jenkins搭建Android自动化构建–配置篇–windows</p>
-<pre><code>这个不扯皮，既然环境都配好了，那上来就是干！
+<!-- Main Content -->
+<div class="container">
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1">
+            <!-- 标签云 -->
+            <div id='tag_cloud' class="tags">
+                
+                <a href="#Android" title="Android" rel="6">Android</a>
+                
+                <a href="#Jenkins" title="Jenkins" rel="2">Jenkins</a>
+                
+                <a href="#自定义View" title="自定义View" rel="1">自定义View</a>
+                
+                <a href="#Python" title="Python" rel="2">Python</a>
+                
+            </div>
 
-本文使用Jenkins+gradle+svn搭建
-</code></pre><p>不管是用虚拟机安装的环境还是本机安装，默认配置都是你的ip地址加上8080端口进入Jenkins首页，至于如何修改Jenkins的默认端口，我会新开一篇介绍<a href="">传送们go！(待完善)</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//本机地址</div><div class="line">http://localhost:8080</div></pre></td></tr></table></figure>
-<p>如果使用ubuntu系统的不要忘记开启服务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo /etc/init.d/jenkins start  </div><div class="line">sudo /etc/init.d/jenkins stop</div></pre></td></tr></table></figure>
-<p>1、开始创建一个新任务时需先去配置Gradle和Java的路径</p>
-<pre><code>主界面--》设置管理--》Global Tool Configuration
-</code></pre><p><img src="http://img.blog.csdn.net/20160829212446328" alt=""></p>
-<p>2、配置gradle和java环境，安装java就不再陈述了，搜一下就有，gradle到这里下载 <a href="http://services.gradle.org/distributions/" target="_blank" rel="external">（传送门走起）</a> 我下载的是gradle-2.12-all的包，解压填写路径，其他配置默认就行。如果是使用Ant构建就添加Ant的路径。<br><img src="http://img.blog.csdn.net/20160829213033252" alt=" "></p>
-<p>3、新建一个任务，名称必须为英文，完成后选择构建一个自由风格的软件项目，然后点击ok创建<br><img src="http://img.blog.csdn.net/20160829213353551" alt=" "></p>
-<p>4、配置svn路径和账号<br><img src="http://img.blog.csdn.net/20160829214254383" alt=""></p>
-<p>5、构建触发器（H/5 <em> </em> <em> </em> 表示每5分钟访问一次svn，当svn的版本有改变时就自动进行构建）<br><img src="http://img.blog.csdn.net/20160829214428457" alt=" "></p>
-<p>6、构建 — 使用 gradle构建—选择Invoke Gradle script<br><img src="http://img.blog.csdn.net/20160829214700541" alt=" "></p>
-<p>7、构建<br><img src="http://img.blog.csdn.net/20160829214859026" alt=" "></p>
-<p>8、发布你的apk文件<br><img src="http://img.blog.csdn.net/20160829215206481" alt=" "></p>
-<p>最后点击保存后  build it! 点击立即构建！</p>
-
+            <!-- 标签列表 -->
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Android">
+                    <span class="tag-text">Android</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/03/20/20160320/">
+                        <h2 class="post-title">
+                            android统一添加activity切换动画
+                        </h2>
+                        
+                    </a>
+                </div>
                 <hr>
                 
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2016/08/30/20160831/" data-toggle="tooltip" data-placement="top"
-                           title="Android自定义控件--评分星级View">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2016/08/29/20160829/" data-toggle="tooltip" data-placement="top"
-                           title="使用Jenkins搭建Android自动化构建--安装篇">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2016/08/29/20160830/"
-                         data-title="使用Jenkins搭建Android自动化构建--配置篇--windows"
-                         data-url="http://ghdeng.github.io/2016/08/29/20160830/">
-                    </div>
+                <div class="post-preview">
+                    <a href="/2016/08/30/20160831/">
+                        <h2 class="post-title">
+                            Android自定义控件--评分星级View
+                        </h2>
+                        
+                    </a>
                 </div>
-                <!-- 多说评论框 end -->
+                <hr>
                 
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    
+                <div class="post-preview">
+                    <a href="/2016/09/30/20160930/">
+                        <h2 class="post-title">
+                            使用广播监听网络变化
+                        </h2>
+                        
+                    </a>
                 </div>
+                <hr>
+                
+                <div class="post-preview">
+                    <a href="/2016/10/01/20160931/">
+                        <h2 class="post-title">
+                            对OkHttp3请求库简单封装适配Json-Rpc调用协议
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+                <div class="post-preview">
+                    <a href="/2016/03/20/20161020/">
+                        <h2 class="post-title">
+                            Android界面跳转传递参数封装
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+                <div class="post-preview">
+                    <a href="/2016/11/20/20161120/">
+                        <h2 class="post-title">
+                            解决Android百度自动更新SDK和360自动更新SDK兼容
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
             </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Jenkins">
+                    <span class="tag-text">Jenkins</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/08/29/20160829/">
+                        <h2 class="post-title">
+                            使用Jenkins搭建Android自动化构建--安装篇
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+                <div class="post-preview">
+                    <a href="/2016/08/29/20160830/">
+                        <h2 class="post-title">
+                            使用Jenkins搭建Android自动化构建--配置篇--windows
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="自定义View">
+                    <span class="tag-text">自定义View</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/08/30/20160831/">
+                        <h2 class="post-title">
+                            Android自定义控件--评分星级View
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+            <div class="one-tag-list">
+                <span class="fa fa-tag listing-seperator" id="Python">
+                    <span class="tag-text">Python</span>
+                </span>
+                
+                <div class="post-preview">
+                    <a href="/2016/10/15/20161015/">
+                        <h2 class="post-title">
+                            Python 学习（一）-- 初识
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+                <div class="post-preview">
+                    <a href="/2016/10/17/20161017/">
+                        <h2 class="post-title">
+                            Python 学习（二） -- 初试抓取动车事件表
+                        </h2>
+                        
+                    </a>
+                </div>
+                <hr>
+                
+            </div>
+            
+
         </div>
-
-        <div class="row">
-            <!-- Sidebar Container -->
-
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
-
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5 class="text-center">
-                        <a href="/tags/">FEATURED TAGS</a>
-                    </h5>
-                    <div class="tags">
-                        
-                        <a class="tag" href="/tags/#Jenkins"
-                           title="Jenkins">Jenkins</a>
-                        
-                    </div>
-                </section>
-                
-
-                <!-- Friends Blog -->
-                
-                <div style="margin-top: 20px;">
-                    <h5 class="text-center">FRIENDS</h5>
-                    <ul class="list-inline text-center">
-                        
-                        <li><a href="http://haojen.github.io/">Haojen Ma</a></li>
-                        
-                    </ul>
-                </div>
-                
-            </div>
-        </div>
-
     </div>
-</article>
-
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'ghdengblog';
-
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
+</div>
 
 <!-- Footer -->
 <!-- Footer -->

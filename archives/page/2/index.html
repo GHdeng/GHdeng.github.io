@@ -18,11 +18,11 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        使用Jenkins搭建Android自动化构建--配置篇--windows｜Caption·Deng&#39;s blog
+        Caption·Deng&#39;s blog
         
     </title>
 
-    <link rel="canonical" href="http://ghdeng.github.io/2016/08/29/20160830/">
+    <link rel="canonical" href="http://ghdeng.github.io/archives/page/2/">
 
     <!-- Bootstrap Core CSS -->
     <link rel="stylesheet" href="/css/bootstrap.min.css">
@@ -43,7 +43,7 @@
 <!-- hack iOS CSS :active style -->
 <body ontouchstart="" class="animated fadeIn">
 <!-- Navigation -->
-<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "false" data-istags="false
 " data-ishome = "false" >
     <div class="container-fluid">
         <!-- Brand and toggle get grouped for better mobile display -->
@@ -134,183 +134,193 @@
 
 <!-- Main Content -->
 
-<!--only post-->
 
-
-<img class="wechat-title-img"
-     src="http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg3.png">
-
-
-<style>
-    
-    header.intro-header {
-        background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg3.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
-    }
-
-    
-</style>
-
-<header class="intro-header">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
-                <div class="post-heading">
-                    <h1>使用Jenkins搭建Android自动化构建--配置篇--windows</h1>
-                    
-                    <span class="meta">
-                         作者 Caption Deng
-                        <span>
-                          日期 2016-08-29
-                         </span>
-                    </span>
-                    <div class="tags text-center">
-                        
-                        <a class="tag" href="/tags/#Jenkins"
-                           title="Jenkins">Jenkins</a>
-                        
+<!-- Page Header -->
+<div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 visible-xs-block visible-sm-block">
+    <div class="row">
+        <header class="intro-header">
+            <div class="container">
+                <div class="site-heading text-center">
+                    <div class="about-me">
+                        <!--移动端头部显示-->
+                        <img src="head.jpg"/>
+                        <h5><a href="/about/">Caption·Deng</a></h5>
+                        <p>每一个不满意的现在都有一个没有努力的曾经！</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </header>
     </div>
-    <div class="post-title-haojen">
-        <span>
-            使用Jenkins搭建Android自动化构建--配置篇--windows
-        </span>
-    </div>
-</header>
+</div>
+<!-- Main Content -->
+<div class="container custom-haojen-container">
+    <!-- Post Container -->
+    <div class="row">
+        <div class="col-lg-8 col-lg-offset-1 col-md-8 col-md-offset-1 col-sm-12 col-xs-12 post-container">
+            <!-- Main Content -->
 
-<!-- Post Content -->
-<article>
-    <div class="container">
-        <div class="row">
-            <!-- Post Container -->
-            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <p>#使用Jenkins搭建Android自动化构建–配置篇–windows</p>
-<pre><code>这个不扯皮，既然环境都配好了，那上来就是干！
 
-本文使用Jenkins+gradle+svn搭建
-</code></pre><p>不管是用虚拟机安装的环境还是本机安装，默认配置都是你的ip地址加上8080端口进入Jenkins首页，至于如何修改Jenkins的默认端口，我会新开一篇介绍<a href="">传送们go！(待完善)</a></p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//本机地址</div><div class="line">http://localhost:8080</div></pre></td></tr></table></figure>
-<p>如果使用ubuntu系统的不要忘记开启服务</p>
-<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo /etc/init.d/jenkins start  </div><div class="line">sudo /etc/init.d/jenkins stop</div></pre></td></tr></table></figure>
-<p>1、开始创建一个新任务时需先去配置Gradle和Java的路径</p>
-<pre><code>主界面--》设置管理--》Global Tool Configuration
-</code></pre><p><img src="http://img.blog.csdn.net/20160829212446328" alt=""></p>
-<p>2、配置gradle和java环境，安装java就不再陈述了，搜一下就有，gradle到这里下载 <a href="http://services.gradle.org/distributions/" target="_blank" rel="external">（传送门走起）</a> 我下载的是gradle-2.12-all的包，解压填写路径，其他配置默认就行。如果是使用Ant构建就添加Ant的路径。<br><img src="http://img.blog.csdn.net/20160829213033252" alt=" "></p>
-<p>3、新建一个任务，名称必须为英文，完成后选择构建一个自由风格的软件项目，然后点击ok创建<br><img src="http://img.blog.csdn.net/20160829213353551" alt=" "></p>
-<p>4、配置svn路径和账号<br><img src="http://img.blog.csdn.net/20160829214254383" alt=""></p>
-<p>5、构建触发器（H/5 <em> </em> <em> </em> 表示每5分钟访问一次svn，当svn的版本有改变时就自动进行构建）<br><img src="http://img.blog.csdn.net/20160829214428457" alt=" "></p>
-<p>6、构建 — 使用 gradle构建—选择Invoke Gradle script<br><img src="http://img.blog.csdn.net/20160829214700541" alt=" "></p>
-<p>7、构建<br><img src="http://img.blog.csdn.net/20160829214859026" alt=" "></p>
-<p>8、发布你的apk文件<br><img src="http://img.blog.csdn.net/20160829215206481" alt=" "></p>
-<p>最后点击保存后  build it! 点击立即构建！</p>
 
-                <hr>
-                
-
-                <ul class="pager">
-                    
-                    <li class="previous">
-                        <a href="/2016/08/30/20160831/" data-toggle="tooltip" data-placement="top"
-                           title="Android自定义控件--评分星级View">&larr; Previous Post</a>
-                    </li>
-                    
-                    
-                    <li class="next">
-                        <a href="/2016/08/29/20160829/" data-toggle="tooltip" data-placement="top"
-                           title="使用Jenkins搭建Android自动化构建--安装篇">Next Post &rarr;</a>
-                    </li>
-                    
-                </ul>
-
-                
-                <!-- 多说评论框 start -->
-                <div class="comment">
-                    <div class="ds-thread"
-                         data-thread-key="2016/08/29/20160830/"
-                         data-title="使用Jenkins搭建Android自动化构建--配置篇--windows"
-                         data-url="http://ghdeng.github.io/2016/08/29/20160830/">
-                    </div>
-                </div>
-                <!-- 多说评论框 end -->
-                
-
-                
-
-            </div>
-
-            <div class="hidden-xs col-sm-3 toc-col">
-                <div class="toc-wrap">
-                    
-                </div>
-            </div>
+<div class="post-preview "
+     style="background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg1.png')">
+    <a href="/2016/03/20/20160320/">
+        <h2 class="post-title">
+            android统一添加activity切换动画
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-03-20
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                android统一添加activity切换动画在告别2015最后一天的时候就决定写写博客，由于工作忙碌一拖就是几个月过去了，是时候来聊聊人生谈谈理想。
+----2016-03-20 里程碑
+在实际的应用开发过程中各种动画效果是必不可少的，这样可以让用户体验到app的流传度和适用度，方便用户快速的..
+            </p>
         </div>
+    </a>
 
-        <div class="row">
-            <!-- Sidebar Container -->
+</div>
 
-            <div class="
-                col-lg-8 col-lg-offset-2
-                col-md-10 col-md-offset-1
-                sidebar-container">
+<hr>
 
-                <!-- Featured Tags -->
-                
-                <section>
-                    <!-- no hr -->
-                    <h5 class="text-center">
-                        <a href="/tags/">FEATURED TAGS</a>
-                    </h5>
-                    <div class="tags">
+
+
+<div class="post-preview "
+     style="background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg1.png')">
+    <a href="/2016/03/20/20161020/">
+        <h2 class="post-title">
+            Android界面跳转传递参数封装
+        </h2>
+        <p class="post-meta">
+            <i class="fa fa-calendar" aria-hidden="true"></i> 2016-03-20
+        </p>
+        
+        <div class="post-content-preview">
+            <p>
+                Android界面跳转传递参数封装#问题分析
+
+或许大家看到标题Android界面跳转会觉得这个有什么好说的呢，无非就是使用startActivity(_this,_class) 和 Intent 的putExtra()来传递参数么！对，就是这么简单。
+but，大家有没想过当界面需要不断的跳转和..
+            </p>
+        </div>
+    </a>
+
+</div>
+
+<hr>
+
+
+
+
+<!-- 翻页 pager -->
+
+<ul class="pager">
+    
+    <li class="previous">
+        <a href="/archives/">&larr; Newer Posts</a>
+    </li>
+    
+    
+</ul>
+
+
+        </div>
+        <!-- Sidebar Container -->
+        <div class="
+                col-lg-3 col-lg-offset-0
+                col-md-3 col-md-offset-0
+                col-sm-12
+                col-xs-12
+                sidebar-container
+            ">
+
+            <!-- About Me -->
+            <section class="visible-md visible-lg" style="padding: 0 18px">
+                <div class="short-about">
+                    <!--侧边栏头像-->
+                    
+                    <img src="head.jpg"/>
+                    
+                    <h5><a href="/about/">Caption·Deng</a></h5>
+                    
+                    <p>每一个不满意的现在都有一个没有努力的曾经！</p>
+                    
+                    <hr>
+                    <!-- SNS Link 社交 -->
+                    <ul class="list-inline">
                         
-                        <a class="tag" href="/tags/#Jenkins"
-                           title="Jenkins">Jenkins</a>
                         
-                    </div>
-                </section>
-                
+                        
+                        <li>
+                            <a target="_blank" href="https://www.zhihu.com/people/ghdeng">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa  fa-stack-1x fa-inverse">知</i>
+                                        </span>
+                            </a>
+                        </li>
+                        
 
-                <!-- Friends Blog -->
-                
-                <div style="margin-top: 20px;">
-                    <h5 class="text-center">FRIENDS</h5>
-                    <ul class="list-inline text-center">
                         
-                        <li><a href="http://haojen.github.io/">Haojen Ma</a></li>
+
+                        
+
+                        
+                        <li>
+                            <a target="_blank" href="https://github.com/ghdeng">
+                                        <span class="fa-stack fa-lg">
+                                            <i class="fa fa-circle fa-stack-2x"></i>
+                                            <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                                        </span>
+                            </a>
+                        </li>
+                        
+
                         
                     </ul>
                 </div>
+            </section>
+
+            <!-- Featured Tags  标签 -->
+            
+            <section>
+                <div class="tags">
+                    
+                    
+                    <a href="/tags/#Android" title="Android"
+                       rel="6">Android</a>
+                    
+                    
+                    
+                    <a href="/tags/#Jenkins" title="Jenkins"
+                       rel="2">Jenkins</a>
+                    
+                    
+                    
+                    
+                    
+                    <a href="/tags/#Python" title="Python"
+                       rel="2">Python</a>
+                    
+                    
+                </div>
+            </section>
+            
+
+            
+            <hr>
+            <h5 style="text-align: center;">Friends</h5>
+            <ul class="list-inline" style="text-align: center;">
                 
-            </div>
+                <li><a href="http://haojen.github.io/" target="_blank">Haojen Ma</a></li>
+                
+            </ul>
+            
+
         </div>
-
     </div>
-</article>
-
-
-<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
-<script type="text/javascript">
-    // dynamic User by Hux
-    var _user = 'ghdengblog';
-
-    // duoshuo comment query.
-    var duoshuoQuery = {short_name: _user};
-    (function () {
-        var ds = document.createElement('script');
-        ds.type = 'text/javascript';
-        ds.async = true;
-        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
-        ds.charset = 'UTF-8';
-        (document.getElementsByTagName('head')[0]
-        || document.getElementsByTagName('body')[0]).appendChild(ds);
-    })();
-</script>
-<!-- 多说公共JS代码 end -->
-
-
-
-
+</div>
 
 <!-- Footer -->
 <!-- Footer -->

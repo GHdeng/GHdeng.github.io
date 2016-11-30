@@ -80,20 +80,22 @@
                         
 							
                         <li>
-                            <a href="/404.html">404</a>
+                            <a href="/Tags/">Tags</a>
                         </li>
 							
 						
                     
                         
 							
-                        <li>
-                            <a href="/Tags/">Tags</a>
-                        </li>
+								
 							
 						
                     
 					
+					
+						<li>
+							<a href="/about">About</a>
+						</li>
 					
                 </ul>
             </div>
@@ -196,15 +198,15 @@
 <hr>
 <h2 id="2、ubuntu-12-04"><a href="#2、ubuntu-12-04" class="headerlink" title="2、ubuntu 12.04"></a>2、ubuntu 12.04</h2><ul>
 <li><p><strong>安装</strong></p>
-<figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key <span class="built_in">add</span> -  </div><div class="line">sudo <span class="keyword">sh</span> -<span class="keyword">c</span> <span class="string">'echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list'</span>  </div><div class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span>  </div><div class="line">sudo apt-<span class="built_in">get</span> install jenkins</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key add -  </div><div class="line">sudo sh -c &apos;echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list&apos;  </div><div class="line">sudo apt-get update  </div><div class="line">sudo apt-get install jenkins</div></pre></td></tr></table></figure>
 </li>
 <li><p><strong>配置</strong></p>
-<figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">/<span class="regexp">/启动Jenkins服务</span></div><div class="line">sudo /etc<span class="regexp">/init.d/jenkins</span> start  </div><div class="line">/<span class="regexp">/停止Jenkins服务</span></div><div class="line">sudo /etc<span class="regexp">/init.d/jenkins</span> stop</div></pre></td></tr></table></figure>
+<figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">//启动Jenkins服务</div><div class="line">sudo /etc/init.d/jenkins start  </div><div class="line">//停止Jenkins服务</div><div class="line">sudo /etc/init.d/jenkins stop</div></pre></td></tr></table></figure>
 </li>
 <li><p><strong>访问路径</strong><br><a href="http://localhost:8080" target="_blank" rel="external">http://localhost:8080</a><br>Jenkins默认安装的端口为8080</p>
 </li>
 </ul>
-<p>1、浏览器进入：<a href="http://localhost:8080，按照给出的提示进入/var/lib/jenkins/sercrets/initialAdminPassword文件夹拿到初始化密码" target="_blank" rel="external">http://localhost:8080，按照给出的提示进入/var/lib/jenkins/sercrets/initialAdminPassword文件夹拿到初始化密码</a><br><figure class="highlight crystal"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">sudo vi /var/<span class="class"><span class="keyword">lib</span>/<span class="title">jenkins</span>/<span class="title">sercrets</span>/<span class="title">initialAdminPassword</span></span></div></pre></td></tr></table></figure></p>
+<p>1、浏览器进入：<a href="http://localhost:8080，按照给出的提示进入/var/lib/jenkins/sercrets/initialAdminPassword文件夹拿到初始化密码" target="_blank" rel="external">http://localhost:8080，按照给出的提示进入/var/lib/jenkins/sercrets/initialAdminPassword文件夹拿到初始化密码</a><br><figure class="highlight plain"><table><tr><td class="code"><pre><div class="line">sudo vi /var/lib/jenkins/sercrets/initialAdminPassword</div></pre></td></tr></table></figure></p>
 <p><img src="http://img.blog.csdn.net/20160829203527291" alt=""></p>
 <p>2、初学者默认选择Install suggested plugins,安装常见的插件<br><img src="http://img.blog.csdn.net/20160829204006559" alt=""></p>
 <p>3、进入下载界面（需要科学上网）<br><img src="http://img.blog.csdn.net/20160829204157671" alt=""></p>
