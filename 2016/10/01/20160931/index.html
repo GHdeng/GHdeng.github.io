@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="www.captiondeng.com">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="邓鄧等灯" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        对OkHttp3请求库简单封装适配Json-Rpc调用协议｜Caption·Deng&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://ghdeng.github.io/2016/10/01/20160931/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('head.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    邓鄧等灯
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg2.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg2.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>对OkHttp3请求库简单封装适配Json-Rpc调用协议</h1>
+                    
+                    <span class="meta">
+                         作者 Caption Deng
+                        <span>
+                          日期 2016-10-01
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            对OkHttp3请求库简单封装适配Json-Rpc调用协议
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="对OkHttp3请求库简单封装适配Json-Rpc调用协议"><a href="#对OkHttp3请求库简单封装适配Json-Rpc调用协议" class="headerlink" title="对OkHttp3请求库简单封装适配Json-Rpc调用协议"></a>对OkHttp3请求库简单封装适配Json-Rpc调用协议</h1><p>###———主要对Json-Rpc结构封装，同时保留post，get请求，加入文件图片download。回调形式Gson，Json，String等。</p>
+<p>####技术简介<br>json-rpc是基于json的跨语言远程调用协议，比xml-rpc、webservice等基于文本的协议传输数据格小；相对hessian、java-rpc等二进制协议便于调试、实现、扩展，是非常优秀的一种远程调用协议。目前主流语言都已有json-rpc的实现框架，java语言中较好的json-rpc实现框架有jsonrpc4j、jpoxy、json-rpc。三者之中jsonrpc4j既可独立使用，又可与spring无缝集合，比较适合于基于spring的项目开发。</p>
+<p>####JSON-RPC协议描述<br>    json-rpc协议非常简单，发起远程调用时向服务端传输数据格式如下：<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="string">"method"</span>: <span class="string">"main"</span>, <span class="string">"params"</span>: [<span class="string">"JSON-RPC"</span>], <span class="string">"id"</span>: <span class="number">1</span>&#125;</div></pre></td></tr></table></figure></p>
+<pre><code>json-rpc返回数据
+</code></pre><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">&#123; <span class="string">"result"</span>:<span class="string">"Hello JSON-RPC"</span>,<span class="string">"error"</span>: <span class="keyword">null</span>,<span class="string">"id"</span>:<span class="number">1</span>&#125;</div></pre></td></tr></table></figure>
+<p>###1.json-rpc请求<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">postRpc</span><span class="params">()</span> </span>&#123;</div><div class="line">        Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        params.put(<span class="string">"userid"</span>, <span class="number">10</span>);</div><div class="line">        ZyNetHttps.getInstances()</div><div class="line">                .newBuilder(<span class="string">"http://zhanyun/shop?"</span>, <span class="string">"Main"</span>)<span class="comment">//设置请求路径和请求方法名</span></div><div class="line">                .tag(<span class="keyword">this</span>)<span class="comment">//当前请求标识</span></div><div class="line">                .params(params)<span class="comment">//请求参数</span></div><div class="line">                .isInputDecryption(<span class="keyword">false</span>)<span class="comment">//输入加密</span></div><div class="line">                .isOutputDecryption(<span class="keyword">false</span>)<span class="comment">//输出加密</span></div><div class="line">                .ctime(<span class="number">30</span>)<span class="comment">//连接时间</span></div><div class="line">                .wtime(<span class="number">10</span>)<span class="comment">//写入时间</span></div><div class="line">                .rtime(<span class="number">10</span>)<span class="comment">//读取时间</span></div><div class="line">                .callBack(<span class="keyword">new</span> GsonResponseHandler&lt;ModelMain&gt;() &#123;<span class="comment">//请求回调</span></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span><span class="params">(<span class="keyword">int</span> statusCode)</span> </span>&#123;</div><div class="line">                        LogHelper.e(statusCode + <span class="string">""</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> statusCode, String error_msg)</span> </span>&#123;</div><div class="line">                        LogHelper.e(error_msg);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(<span class="keyword">int</span> statusCode, ModelMain response)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .RPC();<span class="comment">//请求类型</span></div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>###2.post请求<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">post</span><span class="params">()</span> </span>&#123;</div><div class="line">        Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        params.put(<span class="string">"userid"</span>, <span class="number">10</span>);</div><div class="line">        ZyNetHttps.getInstances()</div><div class="line">                .newBuilder(<span class="string">"http://zhanyun/shop?"</span>)</div><div class="line">                .tag(<span class="keyword">this</span>)</div><div class="line">                .params(params)</div><div class="line">                .callBack(<span class="keyword">new</span> GsonResponseHandler&lt;ModelMain&gt;() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span><span class="params">(<span class="keyword">int</span> statusCode)</span> </span>&#123;</div><div class="line">                        LogHelper.e(statusCode + <span class="string">""</span>);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> statusCode, String error_msg)</span> </span>&#123;</div><div class="line">                        LogHelper.e(error_msg);</div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(<span class="keyword">int</span> statusCode, ModelMain response)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .POST();</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>###3.get请求<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">get</span><span class="params">()</span> </span>&#123;</div><div class="line">        Map&lt;String, Object&gt; params = <span class="keyword">new</span> HashMap&lt;&gt;();</div><div class="line">        params.put(<span class="string">"userid"</span>, <span class="number">10</span>);</div><div class="line">        ZyNetHttps.getInstances()</div><div class="line">                .newBuilder(<span class="string">"http://zhanyun/shop?"</span>)</div><div class="line">                .tag(<span class="keyword">this</span>)</div><div class="line">                .params(params)</div><div class="line">                .callBack(<span class="keyword">new</span> StrResponseHandler() &#123;</div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onSuccess</span><span class="params">(<span class="keyword">int</span> statusCode, String response)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span><span class="params">(<span class="keyword">int</span> statusCode)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> statusCode, String error_msg)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line">                &#125;)</div><div class="line">                .GET();</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>###4.文件下载<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">download</span><span class="params">()</span> </span>&#123;</div><div class="line">        ZyNetHttps.getInstances()</div><div class="line">                .newBuilder(<span class="string">"http://zhanyun/shop?"</span>)</div><div class="line">                .filedir(<span class="string">"/android/"</span>)</div><div class="line">                .filedname(<span class="string">"android.png"</span>)</div><div class="line">                .callBack(<span class="keyword">new</span> DownloadResponseHandler() &#123;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFinish</span><span class="params">(<span class="keyword">int</span> statusCode)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onFailure</span><span class="params">(<span class="keyword">int</span> statusCode, String error_msg)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line">                    <span class="meta">@Override</span></div><div class="line">                    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">onProgress</span><span class="params">(<span class="keyword">long</span> currentBytes, <span class="keyword">long</span> totalBytes)</span> </span>&#123;</div><div class="line"></div><div class="line">                    &#125;</div><div class="line"></div><div class="line"></div><div class="line">                &#125;)</div><div class="line">                .DOWNLOAD();</div><div class="line">    &#125;</div></pre></td></tr></table></figure></p>
+<p>###5.取消当前网络请求<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">private</span> <span class="keyword">void</span> <span class="title">cancel</span><span class="params">(Context mContex)</span> </span>&#123;</div><div class="line">        ZyNetHttps.getInstances().cancel(mContex);</div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
+<p>github地址：<a href="https://github.com/GHdeng/ZyNetHttps" target="_blank" rel="external">https://github.com/GHdeng/ZyNetHttps</a><br>感觉封装得还是不够完善，欢迎大家吐槽Issues。</p>
+<p>我们都是站在巨人的肩膀上：<br>参考</p>
+<ul>
+<li><a href="https://github.com/hongyangAndroid/okhttputils" target="_blank" rel="external">https://github.com/hongyangAndroid/okhttputils</a></li>
+<li><a href="https://github.com/tsy12321/BaseAndroidProject" target="_blank" rel="external">https://github.com/tsy12321/BaseAndroidProject</a></li>
+</ul>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/10/15/20161015/" data-toggle="tooltip" data-placement="top"
+                           title="Python 学习（一）-- 初识">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/09/30/20160930/" data-toggle="tooltip" data-placement="top"
+                           title="使用广播监听网络变化">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/10/01/20160931/"
+                         data-title="对OkHttp3请求库简单封装适配Json-Rpc调用协议"
+                         data-url="http://ghdeng.github.io/2016/10/01/20160931/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#对OkHttp3请求库简单封装适配Json-Rpc调用协议"><span class="toc-text">对OkHttp3请求库简单封装适配Json-Rpc调用协议</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://haojen.github.io/">Haojen Ma</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'ghdengblog';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 邓鄧等灯 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://ghdeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5636b1b753434900df097a9845e115cb';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="head.jpg">
+</body>
+
+</html>

@@ -1,0 +1,461 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="www.captiondeng.com">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="邓鄧等灯" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Android自定义控件--评分星级View｜Caption·Deng&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://ghdeng.github.io/2016/08/30/20160831/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('head.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    邓鄧等灯
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg4.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg4.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Android自定义控件--评分星级View</h1>
+                    
+                    <span class="meta">
+                         作者 Caption Deng
+                        <span>
+                          日期 2016-08-30
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                        <a class="tag" href="/tags/#自定义View"
+                           title="自定义View">自定义View</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Android自定义控件--评分星级View
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <p>#Android自定义控件–评分星级View<br>    在开发电商项目中经常都会遇到一些星级评分控件的需求，有需求就必然有开发。废话不多说，没图没真相，上图：<br><img src="https://raw.githubusercontent.com/GHdeng/StarBarExample/master/resources/StarBarExample.gif" alt="image">   </p>
+<p>##确定需求：</p>
+<ul>
+<li>可以控制子item之间的边距</li>
+<li>自定义选中图片和未选中图片</li>
+<li>摆放纵向或者横向</li>
+<li>可选择选中数量</li>
+</ul>
+<p>##基本绘制流程：</p>
+<ul>
+<li><p>1 自定义属性</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div></pre></td><td class="code"><pre><div class="line"><span class="comment">&lt;!--星星控件属性--&gt;</span></div><div class="line">    <span class="tag">&lt;<span class="name">declare-styleable</span> <span class="attr">name</span>=<span class="string">"StarBarView"</span>&gt;</span></div><div class="line">        <span class="comment">&lt;!--设置星星间的间隔--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"space_width"</span> <span class="attr">format</span>=<span class="string">"dimension"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--星星间宽度--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_width"</span> <span class="attr">format</span>=<span class="string">"dimension"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--星星间高度--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_height"</span> <span class="attr">format</span>=<span class="string">"dimension"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--最大数量--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_max"</span> <span class="attr">format</span>=<span class="string">"integer"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--选中数量--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_rating"</span> <span class="attr">format</span>=<span class="string">"float"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--未选中图片--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_hollow"</span> <span class="attr">format</span>=<span class="string">"reference"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--选中图片--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_solid"</span> <span class="attr">format</span>=<span class="string">"reference"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--是否可以滑动改变选中数量--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_isIndicator"</span> <span class="attr">format</span>=<span class="string">"boolean"</span> /&gt;</span></div><div class="line">        <span class="comment">&lt;!--排列方向--&gt;</span></div><div class="line">        <span class="tag">&lt;<span class="name">attr</span> <span class="attr">name</span>=<span class="string">"star_orientation"</span> <span class="attr">format</span>=<span class="string">"enum"</span>&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"vertical"</span> <span class="attr">value</span>=<span class="string">"1"</span> /&gt;</span></div><div class="line">            <span class="tag">&lt;<span class="name">enum</span> <span class="attr">name</span>=<span class="string">"horizontal"</span> <span class="attr">value</span>=<span class="string">"0"</span> /&gt;</span></div><div class="line">        <span class="tag">&lt;/<span class="name">attr</span>&gt;</span></div><div class="line">    <span class="tag">&lt;/<span class="name">declare-styleable</span>&gt;</span></div></pre></td></tr></table></figure>
+</li>
+<li><p>2 构造函数中获取自定义属性值</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//星星水平排列</span></div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> HORIZONTAL = <span class="number">0</span>;</div><div class="line">   <span class="comment">//星星垂直排列</span></div><div class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="keyword">int</span> VERTICAL = <span class="number">1</span>;</div><div class="line">   <span class="comment">//实心图片</span></div><div class="line">   <span class="keyword">private</span> Bitmap mSolidBitmap;</div><div class="line">   <span class="comment">//空心图片</span></div><div class="line">   <span class="keyword">private</span> Bitmap mHollowBitmap;</div><div class="line">   <span class="keyword">private</span> Context context;</div><div class="line">   <span class="comment">//最大的数量</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> starMaxNumber;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">float</span> starRating;</div><div class="line">   <span class="keyword">private</span> Paint paint;</div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mSpaceWidth;<span class="comment">//星星间隔</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mStarWidth;<span class="comment">//星星宽度</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mStarHeight;<span class="comment">//星星高度</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">boolean</span> isIndicator;<span class="comment">//是否是一个指示器（用户无法进行更改）</span></div><div class="line">   <span class="keyword">private</span> <span class="keyword">int</span> mOrientation;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">StarBarView</span><span class="params">(Context context, AttributeSet attrs)</span> </span>&#123;</div><div class="line">       <span class="keyword">this</span>(context, attrs, <span class="number">0</span>);</div><div class="line">   &#125;</div><div class="line"></div><div class="line">   <span class="function"><span class="keyword">public</span> <span class="title">StarBarView</span><span class="params">(Context context, AttributeSet attrs, <span class="keyword">int</span> defStyle)</span> </span>&#123;</div><div class="line">       <span class="keyword">super</span>(context, attrs, defStyle);</div><div class="line">       paint = <span class="keyword">new</span> Paint();</div><div class="line">       <span class="keyword">this</span>.context = context;</div><div class="line">       TypedArray a = context.obtainStyledAttributes(attrs, R.styleable.StarBarView, defStyle, <span class="number">0</span>);</div><div class="line">       mSpaceWidth = a.getDimensionPixelSize(R.styleable.StarBarView_space_width, <span class="number">0</span>);</div><div class="line">       mStarWidth = a.getDimensionPixelSize(R.styleable.StarBarView_star_width, <span class="number">0</span>);</div><div class="line">       mStarHeight = a.getDimensionPixelSize(R.styleable.StarBarView_star_height, <span class="number">0</span>);</div><div class="line">       starMaxNumber = a.getInt(R.styleable.StarBarView_star_max, <span class="number">0</span>);</div><div class="line">       starRating = a.getFloat(R.styleable.StarBarView_star_rating, <span class="number">0</span>);</div><div class="line">       mSolidBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.StarBarView_star_solid, <span class="number">0</span>)));</div><div class="line">       mHollowBitmap = getZoomBitmap(BitmapFactory.decodeResource(context.getResources(), a.getResourceId(R.styleable.StarBarView_star_hollow, <span class="number">0</span>)));</div><div class="line">       mOrientation = a.getInt(R.styleable.StarBarView_star_orientation, HORIZONTAL);</div><div class="line">       isIndicator = a.getBoolean(R.styleable.StarBarView_star_isIndicator, <span class="keyword">false</span>);</div><div class="line">       a.recycle();</div><div class="line">   &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>3 获取图片bitmap,设置宽高</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div></pre></td><td class="code"><pre><div class="line"><span class="comment">/**</span></div><div class="line">     * 获取缩放图片</div><div class="line">     *</div><div class="line">     * <span class="doctag">@param</span> bitmap</div><div class="line">     * <span class="doctag">@return</span></div><div class="line">     */</div><div class="line">    <span class="function"><span class="keyword">public</span> Bitmap <span class="title">getZoomBitmap</span><span class="params">(Bitmap bitmap)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mStarWidth == <span class="number">0</span> || mStarHeight == <span class="number">0</span>) &#123;</div><div class="line">            <span class="keyword">return</span> bitmap;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">// 获得图片的宽高</span></div><div class="line">        <span class="keyword">int</span> width = bitmap.getWidth();</div><div class="line">        <span class="keyword">int</span> height = bitmap.getHeight();</div><div class="line"></div><div class="line">        <span class="comment">// 设置想要的大小</span></div><div class="line">        <span class="keyword">int</span> newWidth = mStarWidth;</div><div class="line">        <span class="keyword">int</span> newHeight = mStarHeight;</div><div class="line">        <span class="comment">// 计算缩放比例</span></div><div class="line">        <span class="keyword">float</span> scaleWidth = ((<span class="keyword">float</span>) newWidth) / width;</div><div class="line">        <span class="keyword">float</span> scaleHeight = ((<span class="keyword">float</span>) newHeight) / height;</div><div class="line">        <span class="comment">// 取得想要缩放的matrix参数</span></div><div class="line">        Matrix matrix = <span class="keyword">new</span> Matrix();</div><div class="line">        matrix.postScale(scaleWidth, scaleHeight);</div><div class="line">        <span class="comment">// 得到新的图片</span></div><div class="line">        Bitmap newbm = Bitmap.createBitmap(bitmap, <span class="number">0</span>, <span class="number">0</span>, width, height, matrix, <span class="keyword">true</span>);</div><div class="line">        <span class="keyword">return</span> newbm;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>4 onMeasure函数测量子控件大小，然后设置当前控件大小</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onMeasure</span><span class="params">(<span class="keyword">int</span> widthMeasureSpec, <span class="keyword">int</span> heightMeasureSpec)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mOrientation == HORIZONTAL) &#123;</div><div class="line">            <span class="comment">//判断是横向还是纵向，测量长度</span></div><div class="line">            setMeasuredDimension(measureLong(widthMeasureSpec), measureShort(heightMeasureSpec));</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            setMeasuredDimension(measureShort(widthMeasureSpec), measureLong(heightMeasureSpec));</div><div class="line">        &#125;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">measureLong</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result;</div><div class="line">        <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</div><div class="line">        <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> ((specMode == MeasureSpec.EXACTLY)) &#123;</div><div class="line">            result = specSize;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            result = (<span class="keyword">int</span>) (getPaddingLeft() + getPaddingRight() + (mSpaceWidth + mStarWidth) * (starMaxNumber));</div><div class="line">            <span class="keyword">if</span> (specMode == MeasureSpec.AT_MOST) &#123;</div><div class="line">                result = Math.min(result, specSize);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">private</span> <span class="keyword">int</span> <span class="title">measureShort</span><span class="params">(<span class="keyword">int</span> measureSpec)</span> </span>&#123;</div><div class="line">        <span class="keyword">int</span> result;</div><div class="line">        <span class="keyword">int</span> specMode = MeasureSpec.getMode(measureSpec);</div><div class="line">        <span class="keyword">int</span> specSize = MeasureSpec.getSize(measureSpec);</div><div class="line"></div><div class="line">        <span class="keyword">if</span> (specMode == MeasureSpec.EXACTLY) &#123;</div><div class="line">            result = specSize;</div><div class="line">        &#125; <span class="keyword">else</span> &#123;</div><div class="line">            result = (<span class="keyword">int</span>) (mStarHeight + getPaddingTop() + getPaddingBottom());</div><div class="line">            <span class="keyword">if</span> (specMode == MeasureSpec.AT_MOST) &#123;</div><div class="line">                result = Math.min(result, specSize);</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> result;</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>5 确定好数据后开始描绘bitmap到Canvas上</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">protected</span> <span class="keyword">void</span> <span class="title">onDraw</span><span class="params">(Canvas canvas)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (mHollowBitmap == <span class="keyword">null</span> || mSolidBitmap == <span class="keyword">null</span>) &#123;</div><div class="line">            <span class="keyword">return</span>;</div><div class="line">        &#125;</div><div class="line">        <span class="comment">//绘制实心进度</span></div><div class="line">        <span class="keyword">int</span> solidStarNum = (<span class="keyword">int</span>) starRating;</div><div class="line">        <span class="comment">//绘制实心的起点位置</span></div><div class="line">        <span class="keyword">int</span> solidStartPoint = <span class="number">0</span>;</div><div class="line">        <span class="keyword">if</span> (mOrientation == HORIZONTAL)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= solidStarNum; i++) &#123;</div><div class="line">                canvas.drawBitmap(mSolidBitmap, solidStartPoint, <span class="number">0</span>, paint);</div><div class="line">                solidStartPoint = solidStartPoint + mSpaceWidth + mSolidBitmap.getWidth();</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> i = <span class="number">1</span>; i &lt;= solidStarNum; i++) &#123;</div><div class="line">                canvas.drawBitmap(mSolidBitmap, <span class="number">0</span>, solidStartPoint, paint);</div><div class="line">                solidStartPoint = solidStartPoint + mSpaceWidth + mSolidBitmap.getHeight();</div><div class="line">            &#125;</div><div class="line">        <span class="comment">//虚心开始位置</span></div><div class="line">        <span class="keyword">int</span> hollowStartPoint = solidStartPoint;</div><div class="line">        <span class="comment">//多出的实心部分起点</span></div><div class="line">        <span class="keyword">int</span> extraSolidStarPoint = hollowStartPoint;</div><div class="line">        <span class="comment">//虚心数量</span></div><div class="line">        <span class="keyword">int</span> hollowStarNum = starMaxNumber - solidStarNum;</div><div class="line">        <span class="keyword">if</span> (mOrientation == HORIZONTAL)</div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= hollowStarNum; j++) &#123;</div><div class="line">                canvas.drawBitmap(mHollowBitmap, hollowStartPoint, <span class="number">0</span>, paint);</div><div class="line">                hollowStartPoint = hollowStartPoint + mSpaceWidth + mHollowBitmap.getWidth();</div><div class="line">            &#125;</div><div class="line">        <span class="keyword">else</span></div><div class="line">            <span class="keyword">for</span> (<span class="keyword">int</span> j = <span class="number">1</span>; j &lt;= hollowStarNum; j++) &#123;</div><div class="line">                canvas.drawBitmap(mHollowBitmap, <span class="number">0</span>, hollowStartPoint, paint);</div><div class="line">                hollowStartPoint = hollowStartPoint + mSpaceWidth + mHollowBitmap.getWidth();</div><div class="line">            &#125;</div><div class="line">        <span class="comment">//多出的实心长度</span></div><div class="line">        <span class="keyword">int</span> extraSolidLength = (<span class="keyword">int</span>) ((starRating - solidStarNum) * mHollowBitmap.getWidth());</div><div class="line">        Rect rectSrc = <span class="keyword">new</span> Rect(<span class="number">0</span>, <span class="number">0</span>, extraSolidLength, mHollowBitmap.getHeight());</div><div class="line">        Rect dstF = <span class="keyword">new</span> Rect(extraSolidStarPoint, <span class="number">0</span>, extraSolidStarPoint + extraSolidLength, mHollowBitmap.getHeight());</div><div class="line">        canvas.drawBitmap(mSolidBitmap, rectSrc, dstF, paint);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+<li><p>6 最后通过onTouchEvent方法去监听事件</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">boolean</span> <span class="title">onTouchEvent</span><span class="params">(MotionEvent event)</span> </span>&#123;</div><div class="line">        <span class="keyword">if</span> (!isIndicator) &#123;</div><div class="line">            <span class="keyword">switch</span> (event.getAction()) &#123;</div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_DOWN:</div><div class="line">                    <span class="keyword">if</span> (mOrientation == HORIZONTAL) &#123;</div><div class="line">                        <span class="keyword">float</span> TotalWidth = starMaxNumber * (mStarWidth + mSpaceWidth);</div><div class="line">                        <span class="keyword">if</span> (event.getX() &lt;= TotalWidth) &#123;</div><div class="line">                            <span class="keyword">float</span> newStarRating = (<span class="keyword">int</span>) event.getX() / (mStarWidth + mSpaceWidth) + <span class="number">1</span>;</div><div class="line">                            setStarRating(newStarRating);</div><div class="line">                        &#125;</div><div class="line">                    &#125;<span class="keyword">else</span>&#123;</div><div class="line">                        <span class="keyword">float</span> TotalHeight = starMaxNumber * (mStarHeight + mSpaceWidth);</div><div class="line">                        <span class="keyword">if</span> (event.getY() &lt;= TotalHeight) &#123;</div><div class="line">                            <span class="keyword">float</span> newStarRating = (<span class="keyword">int</span>) event.getY() / (mStarHeight + mSpaceWidth) + <span class="number">1</span>;</div><div class="line">                            setStarRating(newStarRating);</div><div class="line">                        &#125;</div><div class="line">                    &#125;</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_MOVE:</div><div class="line"><span class="comment">//                    float starTotalWidth = starMaxNumber * (mStarWidth + mSpaceWidth);</span></div><div class="line"><span class="comment">//                    if (event.getX() &lt;= starTotalWidth) &#123;</span></div><div class="line"><span class="comment">//                        float newStarRating = (int) event.getX() / (mStarWidth + mSpaceWidth) + 1;</span></div><div class="line"><span class="comment">//                    setStarRating(newStarRating);</span></div><div class="line"><span class="comment">//                    &#125;</span></div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_UP:</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> MotionEvent.ACTION_CANCEL:</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        &#125;</div><div class="line">        <span class="keyword">return</span> <span class="keyword">super</span>.onTouchEvent(event);</div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p>###如何使用：</p>
+<ul>
+<li><p>xml布局</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div></pre></td><td class="code"><pre><div class="line"><span class="tag">&lt;<span class="name">com.caption.starbarexample.widget.StarBarView</span></span></div><div class="line">        <span class="attr">android:id</span>=<span class="string">"@+id/sbv_starbar"</span></div><div class="line">        <span class="attr">android:layout_width</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_height</span>=<span class="string">"wrap_content"</span></div><div class="line">        <span class="attr">android:layout_centerInParent</span>=<span class="string">"true"</span></div><div class="line">        <span class="attr">android:layout_margin</span>=<span class="string">"10dp"</span></div><div class="line">        <span class="attr">app:space_width</span>=<span class="string">"1dp"</span></div><div class="line">        <span class="attr">app:star_height</span>=<span class="string">"25dp"</span></div><div class="line">        <span class="attr">app:star_hollow</span>=<span class="string">"@mipmap/ic_star_yellow_normal"</span></div><div class="line">        <span class="attr">app:star_isIndicator</span>=<span class="string">"false"</span></div><div class="line">        <span class="attr">app:star_max</span>=<span class="string">"5"</span></div><div class="line">        <span class="attr">app:star_orientation</span>=<span class="string">"horizontal"</span></div><div class="line">        <span class="attr">app:star_rating</span>=<span class="string">"2"</span></div><div class="line">        <span class="attr">app:star_solid</span>=<span class="string">"@mipmap/ic_star_yellow_selected"</span></div><div class="line">        <span class="attr">app:star_width</span>=<span class="string">"25dp"</span> /&gt;</div></pre></td></tr></table></figure>
+</li>
+<li><p>代码添加</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//拿到当前星星数量</span></div><div class="line">   mStarbar.getStarRating();</div></pre></td></tr></table></figure>
+</li>
+</ul>
+<p><a href="https://github.com/GHdeng/StarBarExample" target="_blank" rel="external">github：https://github.com/GHdeng/StarBarExample</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/09/30/20160930/" data-toggle="tooltip" data-placement="top"
+                           title="使用广播监听网络变化">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/08/29/20160830/" data-toggle="tooltip" data-placement="top"
+                           title="使用Jenkins搭建Android自动化构建--配置篇--windows">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/08/30/20160831/"
+                         data-title="Android自定义控件--评分星级View"
+                         data-url="http://ghdeng.github.io/2016/08/30/20160831/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                        <a class="tag" href="/tags/#自定义View"
+                           title="自定义View">自定义View</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://haojen.github.io/">Haojen Ma</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'ghdengblog';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 邓鄧等灯 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://ghdeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5636b1b753434900df097a9845e115cb';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="head.jpg">
+</body>
+
+</html>

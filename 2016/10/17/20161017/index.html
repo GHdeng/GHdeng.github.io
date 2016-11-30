@@ -1,0 +1,439 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="www.captiondeng.com">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="邓鄧等灯" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        Python 学习（二） -- 初试抓取动车事件表｜Caption·Deng&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://ghdeng.github.io/2016/10/17/20161017/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('head.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    邓鄧等灯
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg4.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg4.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>Python 学习（二） -- 初试抓取动车事件表</h1>
+                    
+                    <span class="meta">
+                         作者 Caption Deng
+                        <span>
+                          日期 2016-10-17
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Python"
+                           title="Python">Python</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            Python 学习（二） -- 初试抓取动车事件表
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="Python-学习（二）-–-初试抓取动车事件表"><a href="#Python-学习（二）-–-初试抓取动车事件表" class="headerlink" title="Python 学习（二） – 初试抓取动车事件表"></a>Python 学习（二） – 初试抓取动车事件表</h1><p>###没图没真相：<br><img src="http://img.blog.csdn.net/20161015234934915" alt="这里写图片描述"></p>
+<p>###确定需求</p>
+<ul>
+<li>查询某日A到B地的列车班次，显示时间、地点、历时等信息</li>
+<li>通过：Python3 run_railway.py [-gdtkz] \<from\> \<to\> \<date\> 调用查询</date\></to\></from\></li>
+</ul>
+<p>###数据分析<br><img src="http://img.blog.csdn.net/20161015235103056" alt="这里写图片描述"></p>
+<p>1.通过分析12306网站查询获取Json数据，格式：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="comment">//kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&amp;queryDate=&#123;DATE&#125;&amp;from_station=&#123;FROM&#125;&amp;to_station=&#123;TO&#125;</span></div></pre></td></tr></table></figure>
+<p>2.由于网站查询的地点是通过字母标识来实现的，而我们的查询格式是通过拼音来实现的，通过分析一下网址可以获取到标识：</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div></pre></td><td class="code"><pre><div class="line">https:<span class="comment">//kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8955</span></div></pre></td></tr></table></figure>
+<p>3.有了以上数据的支持，接下来就可以编码了。</p>
+<p>###功能实现<br>1.首先需要引入三个支持包：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># docopt __doc__获取</span></div><div class="line"><span class="comment"># requests 网络请求</span></div><div class="line"><span class="comment"># prettytable 表格绘制</span></div><div class="line">pip3 install docopt,requests,prettytable</div></pre></td></tr></table></figure>
+<p>2.解析 __doc__</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div></pre></td><td class="code"><pre><div class="line"><span class="string">"""</span></div><div class="line">Train tickets query via command-line.</div><div class="line"></div><div class="line">Usage:</div><div class="line">    tickets [-gdtkz] &lt;from&gt; &lt;to&gt; &lt;date&gt;</div><div class="line"></div><div class="line">Options:</div><div class="line">    -h,--help       显示帮助信息</div><div class="line">    -g              高铁</div><div class="line">    -d              动车</div><div class="line">    -t              特快</div><div class="line">    -k              快车</div><div class="line">    -z              直达</div><div class="line"></div><div class="line">Example:</div><div class="line">    tickets beijing shanghai 2016-10-14</div><div class="line">"""</div></pre></td></tr></table></figure>
+<p>3.首先获取到查询地点对应的key,例如： beijing–&gt;BJ ； shanghai–&gt;SHH</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 创建搜索文件的key/value,保存在一个txt文件方便获取</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">create</span><span class="params">()</span>:</span></div><div class="line">    url = <span class="string">'https://kyfw.12306.cn/otn/resources/js/framework/station_name.js?station_version=1.8955'</span></div><div class="line"></div><div class="line">    r = requests.get(url, verify=<span class="keyword">False</span>)</div><div class="line"></div><div class="line">    stations = re.findall(<span class="string">r'([A-Z]+)\|([a-z]+)'</span>, r.text)</div><div class="line"></div><div class="line">    stations = dict(stations)</div><div class="line"></div><div class="line">    <span class="comment"># zip就是把2个数组糅在一起</span></div><div class="line">    <span class="comment"># x=[1, 2, 3, 4, 5 ]</span></div><div class="line">    <span class="comment"># y=[6, 7, 8, 9, 10]</span></div><div class="line">    <span class="comment"># zip(x, y)就得到了</span></div><div class="line">    <span class="comment"># [(1, 6), (2, 7), (3, 8), (4, 9), (5, 10)]</span></div><div class="line">    stations = dict(zip(stations.values(), stations.keys()))</div><div class="line">    <span class="comment"># pprint(stations.values())</span></div><div class="line">    <span class="comment"># pprint(stations, indent=4)</span></div><div class="line">    file = open(<span class="string">'stations.txt'</span>, mode=<span class="string">'w'</span>, encoding=<span class="string">'utf-8'</span>)</div><div class="line">    file.write(str(stations))</div><div class="line">    file.close()</div></pre></td></tr></table></figure>
+<p>4.搭建显示需要的表格</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div><div class="line">38</div><div class="line">39</div><div class="line">40</div><div class="line">41</div><div class="line">42</div><div class="line">43</div><div class="line">44</div><div class="line">45</div><div class="line">46</div><div class="line">47</div><div class="line">48</div><div class="line">49</div><div class="line">50</div><div class="line">51</div><div class="line">52</div><div class="line">53</div><div class="line">54</div><div class="line">55</div><div class="line">56</div><div class="line">57</div><div class="line">58</div><div class="line">59</div><div class="line">60</div><div class="line">61</div></pre></td><td class="code"><pre><div class="line"><span class="comment"># 修改 出发/到达站 出发/到达时间 的颜色</span></div><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">colored</span><span class="params">(color, text)</span>:</span></div><div class="line">        table = &#123;</div><div class="line">            <span class="string">'red'</span>: <span class="string">'\033[91m'</span>,</div><div class="line">            <span class="string">'green'</span>: <span class="string">'\033[92m'</span>,</div><div class="line">            <span class="comment"># no color</span></div><div class="line">            <span class="string">'nc'</span>: <span class="string">'\033[0m'</span></div><div class="line">        &#125;</div><div class="line">        cv = table.get(color)</div><div class="line">        nc = table.get(<span class="string">'nc'</span>)</div><div class="line">        <span class="keyword">return</span> <span class="string">''</span>.join([cv, text, nc])</div><div class="line"></div><div class="line"><span class="comment"># 搭建表格</span></div><div class="line"><span class="class"><span class="keyword">class</span> <span class="title">TrainCollection</span><span class="params">(object)</span>:</span></div><div class="line">    header = <span class="string">'显示车次 出发/到达站 出发/到达时间 历时 一等坐 二等坐 软卧 硬卧 硬座'</span>.split()</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">__init__</span><span class="params">(self, rows)</span>:</span></div><div class="line">        self.rows = rows</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">_get_duration</span><span class="params">(self, row)</span>:</span></div><div class="line">        <span class="string">"""</span></div><div class="line">        获取车次运行时间</div><div class="line">        """</div><div class="line">        duration = row.get(<span class="string">'lishi'</span>).replace(<span class="string">':'</span>, <span class="string">'h'</span>) + <span class="string">'m'</span></div><div class="line">        <span class="keyword">if</span> duration.startswith(<span class="string">'00'</span>):</div><div class="line">            <span class="keyword">return</span> duration[<span class="number">4</span>:]</div><div class="line">        <span class="keyword">if</span> duration.startswith(<span class="string">'0'</span>):</div><div class="line">            <span class="keyword">return</span> duration[<span class="number">1</span>:]</div><div class="line">        <span class="keyword">return</span> duration</div><div class="line"></div><div class="line"><span class="meta">    @property</span></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">trains</span><span class="params">(self)</span>:</span></div><div class="line">        <span class="keyword">for</span> row <span class="keyword">in</span> self.rows:</div><div class="line">            train = [</div><div class="line">                <span class="comment"># 车次</span></div><div class="line">                row[<span class="string">'station_train_code'</span>],</div><div class="line">                <span class="comment"># 出发、到达站</span></div><div class="line">                <span class="string">'\n'</span>.join([colored(<span class="string">'green'</span>, row[<span class="string">'from_station_name'</span>]),colored(<span class="string">'red'</span>, row[<span class="string">'to_station_name'</span>])]),</div><div class="line">                <span class="string">'\n'</span>.join([colored(<span class="string">'green'</span>, row[<span class="string">'start_time'</span>]),colored(<span class="string">'red'</span>, row[<span class="string">'arrive_time'</span>])]),</div><div class="line">                <span class="comment"># 历时</span></div><div class="line">                self._get_duration(row),</div><div class="line">                <span class="comment"># 一等坐</span></div><div class="line">                row[<span class="string">'zy_num'</span>],</div><div class="line">                <span class="comment"># 二等坐</span></div><div class="line">                row[<span class="string">'ze_num'</span>],</div><div class="line">                <span class="comment"># 软卧</span></div><div class="line">                row[<span class="string">'rw_num'</span>],</div><div class="line">                <span class="comment"># 软坐</span></div><div class="line">                row[<span class="string">'yw_num'</span>],</div><div class="line">                <span class="comment"># 硬坐</span></div><div class="line">                row[<span class="string">'yz_num'</span>]</div><div class="line">            ]</div><div class="line">            <span class="keyword">yield</span> train</div><div class="line"></div><div class="line">    <span class="function"><span class="keyword">def</span> <span class="title">pretty_print</span><span class="params">(self)</span>:</span></div><div class="line">        pt = PrettyTable()</div><div class="line">        <span class="comment"># 设置每一列的标题</span></div><div class="line">        pt._set_field_names(self.header)</div><div class="line">        <span class="keyword">for</span> train <span class="keyword">in</span> self.trains:</div><div class="line">            pt.add_row(train)</div><div class="line">        print(pt)</div></pre></td></tr></table></figure>
+<p>5.对数据进行加载，大功告成</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div></pre></td><td class="code"><pre><div class="line"><span class="function"><span class="keyword">def</span> <span class="title">client</span><span class="params">()</span>:</span></div><div class="line">    <span class="string">"""</span></div><div class="line">    command-line interface</div><div class="line">    """</div><div class="line">    arguments = docopt(__doc__)</div><div class="line">    <span class="comment"># print(arguments)</span></div><div class="line"></div><div class="line">    file = open(<span class="string">'stations.txt'</span>,<span class="string">'r'</span>)</div><div class="line">    stations = eval(file.read())</div><div class="line"></div><div class="line">    from_station = stations.get(arguments[<span class="string">'&lt;from&gt;'</span>])</div><div class="line">    to_station = stations.get(arguments[<span class="string">'&lt;to&gt;'</span>])</div><div class="line">    date = arguments[<span class="string">'&lt;date&gt;'</span>]</div><div class="line"></div><div class="line">    url = <span class="string">'https://kyfw.12306.cn/otn/lcxxcx/query?purpose_codes=ADULT&amp;queryDate=&#123;&#125;&amp;from_station=&#123;&#125;&amp;to_station=&#123;&#125;'</span> \</div><div class="line">        .format(date, from_station, to_station)</div><div class="line">    r = requests.get(url, verify=<span class="keyword">False</span>)</div><div class="line">    <span class="comment"># pprint(r.json())</span></div><div class="line">    rows = r.json()[<span class="string">'data'</span>][<span class="string">'datas'</span>]</div><div class="line">    trains = TrainCollection(rows)</div><div class="line">    trains.pretty_print()</div><div class="line"></div><div class="line"></div><div class="line"><span class="keyword">if</span> __name__ == <span class="string">'__main__'</span>:</div><div class="line">    create()</div><div class="line">    <span class="keyword">while</span> <span class="keyword">True</span>:</div><div class="line">        client()</div><div class="line">        time.sleep(<span class="number">60</span>)</div><div class="line">        <span class="comment">#i = os.system('cls') #window 下清屏</span></div><div class="line">        i = os.system(<span class="string">'clear'</span>)</div></pre></td></tr></table></figure>
+<p>###初次尝试，欢迎issues和提需求<br><a href="https://github.com/GHdeng/RailwayStation" target="_blank" rel="external">https://github.com/GHdeng/RailwayStation</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/11/20/20161120/" data-toggle="tooltip" data-placement="top"
+                           title="Android界面跳转传递参数封装">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/10/15/20161015/" data-toggle="tooltip" data-placement="top"
+                           title="Python 学习（一）-- 初识">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/10/17/20161017/"
+                         data-title="Python 学习（二） -- 初试抓取动车事件表"
+                         data-url="http://ghdeng.github.io/2016/10/17/20161017/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#Python-学习（二）-–-初试抓取动车事件表"><span class="toc-text">Python 学习（二） – 初试抓取动车事件表</span></a></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Python"
+                           title="Python">Python</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://haojen.github.io/">Haojen Ma</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'ghdengblog';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 邓鄧等灯 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://ghdeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5636b1b753434900df097a9845e115cb';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="head.jpg">
+</body>
+
+</html>

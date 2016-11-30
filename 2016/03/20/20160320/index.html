@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Head tag -->
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="www.captiondeng.com">
+    <meta name="keyword" content="null">
+    <meta name="theme-color" content="#600090">
+    <meta name="msapplication-navbutton-color" content="#600090">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="#600090">
+    <link rel="shortcut icon" href="https://cdn4.iconfinder.com/data/icons/ionicons/512/icon-person-128.png">
+    <link rel="alternate" type="application/atom+xml" title="邓鄧等灯" href="/atom.xml">
+    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+    <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
+    <title>
+        
+        android统一添加activity切换动画｜Caption·Deng&#39;s blog
+        
+    </title>
+
+    <link rel="canonical" href="http://ghdeng.github.io/2016/03/20/20160320/">
+
+    <!-- Bootstrap Core CSS -->
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="/css/blog-style.css">
+
+    <!-- Pygments Github CSS -->
+    <link rel="stylesheet" href="/css/syntax.css">
+</head>
+
+<style>
+
+    header.intro-header {
+        background-image: url('head.jpg')
+    }
+</style>
+<!-- hack iOS CSS :active style -->
+<body ontouchstart="" class="animated fadeIn">
+<!-- Navigation -->
+<nav class="navbar navbar-default navbar-custom navbar-fixed-top " id="nav-top" data-ispost = "true" data-istags="false
+" data-ishome = "false" >
+    <div class="container-fluid">
+        <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header page-scroll">
+            <button type="button" class="navbar-toggle">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand animated pulse" href="/">
+                <span class="brand-logo">
+                    邓鄧等灯
+                </span>
+                's Blog
+            </a>
+        </div>
+
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <!-- Known Issue, found by Hux:
+            <nav>'s height woule be hold on by its content.
+            so, when navbar scale out, the <nav> will cover tags.
+            also mask any touch event of tags, unfortunately.
+        -->
+        <!-- /.navbar-collapse -->
+        <div id="huxblog_navbar">
+            <div class="navbar-collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li>
+                        <a href="/">Home</a>
+                    </li>
+					
+                    
+                        
+							
+                        <li>
+                            <a href="/Tags/">Tags</a>
+                        </li>
+							
+						
+                    
+					
+					
+                </ul>
+            </div>
+        </div>
+    </div>
+    <!-- /.container -->
+</nav>
+<script>
+    // Drop Bootstarp low-performance Navbar
+    // Use customize navbar with high-quality material design animation
+    // in high-perf jank-free CSS3 implementation
+//    var $body   = document.body;
+    var $toggle = document.querySelector('.navbar-toggle');
+    var $navbar = document.querySelector('#huxblog_navbar');
+    var $collapse = document.querySelector('.navbar-collapse');
+
+    $toggle.addEventListener('click', handleMagic)
+    function handleMagic(e){
+        if ($navbar.className.indexOf('in') > 0) {
+        // CLOSE
+            $navbar.className = " ";
+            // wait until animation end.
+            setTimeout(function(){
+                // prevent frequently toggle
+                if($navbar.className.indexOf('in') < 0) {
+                    $collapse.style.height = "0px"
+                }
+            },400)
+        }else{
+        // OPEN
+            $collapse.style.height = "auto"
+            $navbar.className += " in";
+        }
+    }
+</script>
+
+<!-- Main Content -->
+
+<!--only post-->
+
+
+<img class="wechat-title-img"
+     src="http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg1.png">
+
+
+<style>
+    
+    header.intro-header {
+        background-image: url('http://ohg8lvbza.bkt.clouddn.com/blog/ghdeng/defout_bg1.png?imageView2/1/w/1400/h/400/interlace/1/q/90')
+    }
+
+    
+</style>
+
+<header class="intro-header">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <div class="post-heading">
+                    <h1>android统一添加activity切换动画</h1>
+                    
+                    <span class="meta">
+                         作者 Caption Deng
+                        <span>
+                          日期 2016-03-20
+                         </span>
+                    </span>
+                    <div class="tags text-center">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="post-title-haojen">
+        <span>
+            android统一添加activity切换动画
+        </span>
+    </div>
+</header>
+
+<!-- Post Content -->
+<article>
+    <div class="container">
+        <div class="row">
+            <!-- Post Container -->
+            <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
+                <h1 id="android统一添加activity切换动画"><a href="#android统一添加activity切换动画" class="headerlink" title="android统一添加activity切换动画"></a>android统一添加activity切换动画</h1><pre><code>在告别2015最后一天的时候就决定写写博客，由于工作忙碌一拖就是几个月过去了，是时候来聊聊人生谈谈理想。
+----2016-03-20 里程碑
+</code></pre><p>在实际的应用开发过程中各种动画效果是必不可少的，这样可以让用户体验到app的流传度和适用度，方便用户快速的熟悉app应用的操作。废话不多说，直接开播。。。</p>
+<p>实现activity界面切换动画效果有两种方式：<br>1.styles.xml编写动画主题，在AndroidManifest.xml里面使用。<br>2.在activity的onCreate()和finish() 里面调用overridePendingTransition函数.</p>
+<h2 id="使用两种方法的前提都是需要准备动画效果文件："><a href="#使用两种方法的前提都是需要准备动画效果文件：" class="headerlink" title="使用两种方法的前提都是需要准备动画效果文件："></a>使用两种方法的前提都是需要准备动画效果文件：</h2><figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div><div class="line">26</div><div class="line">27</div><div class="line">28</div><div class="line">29</div><div class="line">30</div><div class="line">31</div><div class="line">32</div><div class="line">33</div><div class="line">34</div><div class="line">35</div><div class="line">36</div><div class="line">37</div></pre></td><td class="code"><pre><div class="line">//slide_in_form_left.xml</div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;set xmlns:android="http://schemas.android.com/apk/res/android"&gt;</div><div class="line"></div><div class="line">    &lt;translate</div><div class="line">        android:duration="200"</div><div class="line">        android:fromXDelta="-100%p"</div><div class="line">        android:toXDelta="0" /&gt;</div><div class="line">&lt;/set&gt;</div><div class="line"></div><div class="line">//slide_in_for_right.xml</div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;set xmlns:android="http://schemas.android.com/apk/res/android"&gt;</div><div class="line"></div><div class="line">    &lt;translate</div><div class="line">        android:duration="200"</div><div class="line">        android:fromXDelta="100%p"</div><div class="line">        android:toXDelta="0" /&gt;</div><div class="line">&lt;/set&gt;</div><div class="line"></div><div class="line">//slide_out_to_left.xml</div><div class="line">&lt;?xml version="1.0" encoding="utf-8"?&gt;</div><div class="line">&lt;set xmlns:android="http://schemas.android.com/apk/res/android"&gt;</div><div class="line"></div><div class="line">    &lt;translate</div><div class="line">        android:duration="200"</div><div class="line">        android:fromXDelta="0"</div><div class="line">        android:toXDelta="-100%p" /&gt;</div><div class="line">&lt;/set&gt;</div><div class="line"></div><div class="line">//slide_out_to_right.xml</div><div class="line">&lt;set xmlns:android="http://schemas.android.com/apk/res/android"&gt;</div><div class="line">    &lt;translate</div><div class="line">        android:duration="200"</div><div class="line">        android:fromXDelta="0"</div><div class="line">        android:toXDelta="100%p" /&gt;</div><div class="line">&lt;/set&gt;</div></pre></td></tr></table></figure>
+<p>写完动画效果文件后，就按照第一种方式配置：</p>
+<ul>
+<li>styles.xml 文件配置启动关闭效果动画</li>
+</ul>
+<figure class="highlight"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div></pre></td><td class="code"><pre><div class="line">&lt;!-- 界面切换动画 --&gt;</div><div class="line">    &lt;style name="animfade" parent="@android:style/Animation.Activity"&gt;</div><div class="line">        &lt;item name="android:activityOpenEnterAnimation"&gt;@anim/slide_in_from_right&lt;/item&gt;</div><div class="line">        &lt;item name="android:activityOpenExitAnimation"&gt;@anim/slide_out_to_left&lt;/item&gt;</div><div class="line">        &lt;item name="android:activityCloseExitAnimation"&gt;@anim/slide_out_to_right&lt;/item&gt;</div><div class="line">        &lt;item name="android:activityCloseEnterAnimation"&gt;@anim/slide_in_from_left&lt;/item&gt;</div><div class="line">    &lt;/style&gt;</div><div class="line">&lt;!-- Base application theme. --&gt;</div><div class="line">    &lt;style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar"&gt;</div><div class="line">        &lt;!-- Customize your theme here. --&gt;</div><div class="line">        &lt;item name="android:windowAnimationStyle"&gt;@style/animfade&lt;/item&gt;</div><div class="line">    &lt;/style&gt;</div></pre></td></tr></table></figure>
+<ul>
+<li>在AndroidManifest.xml配置Theme</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div></pre></td><td class="code"><pre><div class="line">&lt;application</div><div class="line">        android:allowBackup=<span class="string">"true"</span></div><div class="line">        android:icon=<span class="string">"@mipmap/icon_logo"</span></div><div class="line">        android:label=<span class="string">"@string/app_name"</span></div><div class="line">        android:supportsRtl=<span class="string">"true"</span></div><div class="line">        android:theme=<span class="string">"@style/AppTheme"</span>&gt;</div></pre></td></tr></table></figure>
+<p>第二种方式配置，在开发中一般都会配置基类BaseActivity，让所有的Activity去继承BaseActivity方便管理</p>
+<ul>
+<li>在BaseActivity中OnCreate()启动</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div></pre></td><td class="code"><pre><div class="line"><span class="keyword">switch</span> (STATE) &#123;</div><div class="line">                <span class="keyword">case</span> LEFT:</div><div class="line">                    <span class="comment">//输入，退出  的界面</span></div><div class="line">                    overridePendingTransition(R.anim.left_in, R.anim.left_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> RIGHT:</div><div class="line">                    overridePendingTransition(R.anim.right_in, R.anim.right_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> TOP:</div><div class="line">                    overridePendingTransition(R.anim.top_in, R.anim.top_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> BOTTOM:</div><div class="line">                    overridePendingTransition(R.anim.bottom_in, R.anim.bottom_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> SCALE:</div><div class="line">                    overridePendingTransition(R.anim.scale_in, R.anim.scale_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> FADE:</div><div class="line">                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div></pre></td></tr></table></figure>
+<ul>
+<li>finish()关闭</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div><div class="line">14</div><div class="line">15</div><div class="line">16</div><div class="line">17</div><div class="line">18</div><div class="line">19</div><div class="line">20</div><div class="line">21</div><div class="line">22</div><div class="line">23</div><div class="line">24</div><div class="line">25</div></pre></td><td class="code"><pre><div class="line"><span class="meta">@Override</span></div><div class="line">    <span class="function"><span class="keyword">public</span> <span class="keyword">void</span> <span class="title">finish</span><span class="params">()</span> </span>&#123;</div><div class="line">        <span class="keyword">super</span>.finish();</div><div class="line">            <span class="keyword">switch</span> (STATE) &#123;</div><div class="line">                <span class="keyword">case</span> LEFT:</div><div class="line">                    overridePendingTransition(R.anim.left_in, R.anim.left_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> RIGHT:</div><div class="line">                    overridePendingTransition(R.anim.right_in, R.anim.right_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> TOP:</div><div class="line">                    overridePendingTransition(R.anim.top_in, R.anim.top_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> BOTTOM:</div><div class="line">                    overridePendingTransition(R.anim.bottom_in, R.anim.bottom_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> SCALE:</div><div class="line">                    overridePendingTransition(R.anim.scale_in, R.anim.scale_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">                <span class="keyword">case</span> FADE:</div><div class="line">                    overridePendingTransition(R.anim.fade_in, R.anim.fade_out);</div><div class="line">                    <span class="keyword">break</span>;</div><div class="line">            &#125;</div><div class="line">        </div><div class="line">    &#125;</div></pre></td></tr></table></figure>
+<h2 id="参考灵感："><a href="#参考灵感：" class="headerlink" title="参考灵感："></a>参考灵感：</h2><p><a href="https://github.com/GcsSloop/SloopBlog/blob/master" target="_blank" rel="external">https://github.com/GcsSloop/SloopBlog/blob/master</a></p>
+
+                <hr>
+                
+
+                <ul class="pager">
+                    
+                    <li class="previous">
+                        <a href="/2016/08/29/20160829/" data-toggle="tooltip" data-placement="top"
+                           title="使用Jenkins搭建Android自动化构建--安装篇">&larr; Previous Post</a>
+                    </li>
+                    
+                    
+                    <li class="next">
+                        <a href="/2016/03/20/20161020/" data-toggle="tooltip" data-placement="top"
+                           title="Android界面跳转传递参数封装">Next Post &rarr;</a>
+                    </li>
+                    
+                </ul>
+
+                
+                <!-- 多说评论框 start -->
+                <div class="comment">
+                    <div class="ds-thread"
+                         data-thread-key="2016/03/20/20160320/"
+                         data-title="android统一添加activity切换动画"
+                         data-url="http://ghdeng.github.io/2016/03/20/20160320/">
+                    </div>
+                </div>
+                <!-- 多说评论框 end -->
+                
+
+                
+
+            </div>
+
+            <div class="hidden-xs col-sm-3 toc-col">
+                <div class="toc-wrap">
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#android统一添加activity切换动画"><span class="toc-text">android统一添加activity切换动画</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#使用两种方法的前提都是需要准备动画效果文件："><span class="toc-text">使用两种方法的前提都是需要准备动画效果文件：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#参考灵感："><span class="toc-text">参考灵感：</span></a></li></ol></li></ol>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <!-- Sidebar Container -->
+
+            <div class="
+                col-lg-8 col-lg-offset-2
+                col-md-10 col-md-offset-1
+                sidebar-container">
+
+                <!-- Featured Tags -->
+                
+                <section>
+                    <!-- no hr -->
+                    <h5 class="text-center">
+                        <a href="/tags/">FEATURED TAGS</a>
+                    </h5>
+                    <div class="tags">
+                        
+                        <a class="tag" href="/tags/#Android"
+                           title="Android">Android</a>
+                        
+                    </div>
+                </section>
+                
+
+                <!-- Friends Blog -->
+                
+                <div style="margin-top: 20px;">
+                    <h5 class="text-center">FRIENDS</h5>
+                    <ul class="list-inline text-center">
+                        
+                        <li><a href="http://haojen.github.io/">Haojen Ma</a></li>
+                        
+                    </ul>
+                </div>
+                
+            </div>
+        </div>
+
+    </div>
+</article>
+
+
+<!-- 多说公共JS代码 start (一个网页只需插入一次) -->
+<script type="text/javascript">
+    // dynamic User by Hux
+    var _user = 'ghdengblog';
+
+    // duoshuo comment query.
+    var duoshuoQuery = {short_name: _user};
+    (function () {
+        var ds = document.createElement('script');
+        ds.type = 'text/javascript';
+        ds.async = true;
+        ds.src = (document.location.protocol == 'https:' ? 'https:' : 'http:') + '//static.duoshuo.com/embed.js';
+        ds.charset = 'UTF-8';
+        (document.getElementsByTagName('head')[0]
+        || document.getElementsByTagName('body')[0]).appendChild(ds);
+    })();
+</script>
+<!-- 多说公共JS代码 end -->
+
+
+
+
+
+<!-- Footer -->
+<!-- Footer -->
+<footer>
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
+                <br>
+                <ul class="list-inline text-center">
+                
+                
+                
+                    <li>
+                        <a target="_blank" href="https://www.zhihu.com/people/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa  fa-stack-1x fa-inverse">知</i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                
+
+                
+                    <li>
+                        <a target="_blank"  href="https://github.com/ghdeng">
+                            <span class="fa-stack fa-lg">
+                                <i class="fa fa-circle fa-stack-2x"></i>
+                                <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                            </span>
+                        </a>
+                    </li>
+                
+
+                
+
+                </ul>
+                <p class="copyright text-muted">
+                    Copyright &copy; 邓鄧等灯 2016
+                    <br>
+                    <span id="busuanzi_container_site_pv" style="font-size: 12px;">PV: <span id="busuanzi_value_site_pv"></span> Times</span>
+                    <br>
+                    Theme by <a href="https://haojen.github.io/">Haojen Ma</a>
+                </p>
+
+            </div>
+        </div>
+    </div>
+</footer>
+
+<!-- jQuery -->
+<script src="/js/jquery.min.js"></script>
+
+<!-- Bootstrap Core JavaScript -->
+<script src="/js/bootstrap.min.js"></script>
+
+<!-- Custom Theme JavaScript -->
+<script src="/js/blog.js"></script>
+
+<!-- async load function -->
+<script>
+    function async(u, c) {
+      var d = document, t = 'script',
+          o = d.createElement(t),
+          s = d.getElementsByTagName(t)[0];
+      o.src = u;
+      if (c) { o.addEventListener('load', function (e) { c(null, e); }, false); }
+      s.parentNode.insertBefore(o, s);
+    }
+</script>
+
+<!-- jquery.tagcloud.js -->
+<script>
+    // only load tagcloud.js in tag.html
+    if($('#tag_cloud').length !== 0){
+        async("http://ghdeng.github.io/js/jquery.tagcloud.js",function(){
+            $.fn.tagcloud.defaults = {
+                //size: {start: 1, end: 1, unit: 'em'},
+                color: {start: '#bbbbee', end: '#0085a1'},
+            };
+            $('#tag_cloud a').tagcloud();
+        })
+    }
+</script>
+
+<!--fastClick.js -->
+<script>
+    async("//cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js", function(){
+        var $nav = document.querySelector("nav");
+        if($nav) FastClick.attach($nav);
+    })
+</script>
+
+<!-- Google Analytics -->
+
+
+
+<!-- Baidu Tongji -->
+
+<script>
+    var _baId = '5636b1b753434900df097a9845e115cb';
+    // Originial
+    var _hmt = _hmt || [];
+    (function() {
+        var hm = document.createElement("script");
+        hm.src = "//hm.baidu.com/hm.js?" + _baId;
+        var s = document.getElementsByTagName("script")[0];
+        s.parentNode.insertBefore(hm, s);
+    })();
+</script>
+
+
+<!-- swiftype -->
+<script type="text/javascript">
+  (function(w,d,t,u,n,s,e){w['SwiftypeObject']=n;w[n]=w[n]||function(){
+  (w[n].q=w[n].q||[]).push(arguments);};s=d.createElement(t);
+  e=d.getElementsByTagName(t)[0];s.async=1;s.src=u;e.parentNode.insertBefore(s,e);
+  })(window,document,'script','//s.swiftypecdn.com/install/v2/st.js','_st');
+
+  _st('install','null','2.0.0');
+</script>
+
+<script async src="//dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+<!--wechat title img-->
+<img class="wechat-title-img" src="head.jpg">
+</body>
+
+</html>
