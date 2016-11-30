@@ -176,13 +176,13 @@
         <div class="row">
             <!-- Post Container -->
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
-                <h1 id="Android界面跳转传递参数封装"><a href="#Android界面跳转传递参数封装" class="headerlink" title="Android界面跳转传递参数封装"></a>Android界面跳转传递参数封装</h1><p>###问题分析</p>
+                <h1 id="Android界面跳转传递参数封装"><a href="#Android界面跳转传递参数封装" class="headerlink" title="Android界面跳转传递参数封装"></a>Android界面跳转传递参数封装</h1><p>#问题分析</p>
 <ul>
 <li>或许大家看到标题Android界面跳转会觉得这个有什么好说的呢，无非就是使用startActivity(_this,_class) 和 Intent 的putExtra()来传递参数么！对，就是这么简单。</li>
 <li>but，大家有没想过当界面需要不断的跳转和带多个参数的时候使用Intent的putExtra()会显得很乱，更重要的是从 Intent 中取数据的时候需要格外小心——类型要对应，key 要写对，不然轻则取不到数据，重则 Crash。还有一点，就是当前 Activity/Fragment 必须要知道目标 Activity 的类名，这里耦合的很严重，有没有。当时就在想这是不是应该封装一下啊，或者有更好的解决方案。</li>
 </ul>
 <hr>
-<p>###方案（一）</p>
+<p>#方案（一）</p>
 <ol>
 <li>在utils包里面创建一个统一管理界面跳转的单模式</li>
 <li>在OpenActManager中创建intent实现跳转</li>
@@ -194,7 +194,7 @@
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div></pre></td><td class="code"><pre><div class="line"><span class="comment">//SecondActivity.class</span></div><div class="line">StartActTransfer startActTransfer = OpenActManager.get().getParcelableExtra(<span class="keyword">this</span>);</div><div class="line">        <span class="keyword">if</span>(startActTransfer!=<span class="keyword">null</span>)&#123;</div><div class="line">            <span class="keyword">int</span> id = startActTransfer.id;</div><div class="line">            String name = startActTransfer.name;</div><div class="line">            ArrayList&lt;String&gt; data = startActTransfer.data;</div><div class="line">            LogHelper.e(<span class="string">"id:"</span>+id+<span class="string">"   "</span>+<span class="string">"name:"</span>+name);</div><div class="line">        &#125;</div></pre></td></tr></table></figure>
 <p>完整例子代码 <a href="https://github.com/GHdeng/OpenActManager" target="_blank" rel="external">github</a></p>
 <hr>
-<p>###方案（二）</p>
+<p>#方案（二）</p>
 <ul>
 <li>使用Android路由表框架</li>
 <li><a href="http://www.sixwolf.net/blog/2016/03/23/Android%E8%B7%AF%E7%94%B1%E6%A1%86%E6%9E%B6%E8%AE%BE%E8%AE%A1/" target="_blank" rel="external">http://www.sixwolf.net/blog/2016/03/23/Android路由框架设计/</a></li>

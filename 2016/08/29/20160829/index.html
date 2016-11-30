@@ -155,9 +155,6 @@
                     </span>
                     <div class="tags text-center">
                         
-                        <a class="tag" href="/tags/#Android"
-                           title="Android">Android</a>
-                        
                         <a class="tag" href="/tags/#Jenkins"
                            title="Jenkins">Jenkins</a>
                         
@@ -182,17 +179,14 @@
                 <h1 id="使用Jenkins搭建Android自动化构建–安装篇"><a href="#使用Jenkins搭建Android自动化构建–安装篇" class="headerlink" title="使用Jenkins搭建Android自动化构建–安装篇"></a>使用Jenkins搭建Android自动化构建–安装篇</h1><pre><code>搭建前当然是来吹吹牛，灵感来自服务端的自动化构建，看着技术老大把代码往服务器上一丢，自动build，然后通过邮箱来通知是否构建成功，这样是多省事的，于是潜心去研究一番。
 </code></pre><p>必备的理论知识还是不能少滴，持续集成：</p>
 <pre><code>持续集成是一种软件开发实践，即团队开发成员经常集成他们的工作，通常每个成员每天至少集成一次，也就意味着每天可能会发生多次集成。每次集成都通过自动化的构建（包括编译，发布，自动化测试)来验证，从而尽快地发现集成错误。许多团队发现这个过程可以大大减少集成的问题，让团队能够更快的开发内聚的软件。
-</code></pre><p>##一、环境搭建 </p>
-<p>##1、windows sever 2008</p>
-<ul>
+</code></pre><h1 id="一、环境搭建"><a href="#一、环境搭建" class="headerlink" title="一、环境搭建"></a>一、环境搭建</h1><h2 id="1、windows-sever-2008"><a href="#1、windows-sever-2008" class="headerlink" title="1、windows sever 2008"></a>1、windows sever 2008</h2><ul>
 <li><strong>安装</strong><br>  使用windows系统搭建Jenkins环境相对来说简单很多，界面化一路next就行了。（说明一下，我搭建的Jenkins是在虚拟机上跑起来的windows系统）<br>  <a href="https://jenkins.io/content/thank-you-downloading-windows-installer#stable" target="_blank" rel="external">Jenkins下载路径</a></li>
 <li><strong>配置</strong><br>  windows系统的直接就默认next<br>1、安装，一路next到finish<br><img src="http://img.blog.csdn.net/20160829205406142" alt=""></li>
 </ul>
 <p>2、按照提示拿到初始化密码<br><img src="http://img.blog.csdn.net/20160829205527892" alt=" "></p>
 <p>3、接下来的步骤同ubuntu安装第2步开始一致</p>
 <hr>
-<p>##2、ubuntu 12.04</p>
-<ul>
+<h2 id="2、ubuntu-12-04"><a href="#2、ubuntu-12-04" class="headerlink" title="2、ubuntu 12.04"></a>2、ubuntu 12.04</h2><ul>
 <li><p><strong>安装</strong></p>
 <figure class="highlight vim"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div></pre></td><td class="code"><pre><div class="line">wget -q -O - http://pkg.jenkins-ci.org/debian/jenkins-ci.org.key | sudo apt-key <span class="built_in">add</span> -  </div><div class="line">sudo <span class="keyword">sh</span> -<span class="keyword">c</span> <span class="string">'echo deb http://pkg.jenkins-ci.org/debian binary/ &gt; /etc/apt/sources.list.d/jenkins.list'</span>  </div><div class="line">sudo apt-<span class="built_in">get</span> <span class="keyword">update</span>  </div><div class="line">sudo apt-<span class="built_in">get</span> install jenkins</div></pre></td></tr></table></figure>
 </li>
@@ -208,7 +202,7 @@
 <p>3、进入下载界面（需要科学上网）<br><img src="http://img.blog.csdn.net/20160829204157671" alt=""></p>
 <p>4、创建用户<br><img src="http://img.blog.csdn.net/20160829204303611" alt=""></p>
 <p>5、大功告成<br><img src="http://img.blog.csdn.net/20160829204351503" alt=""></p>
-<p>备注：<br>我们都是站在巨人的肩旁上，感谢造轮子的巨人<br>参考 1.<a href="http://www.jianshu.com/p/e7174056198e" target="_blank" rel="external">http://www.jianshu.com/p/e7174056198e</a></p>
+<p>#备注：<br>我们都是站在巨人的肩旁上，感谢造轮子的巨人<br>参考 1.<a href="http://www.jianshu.com/p/e7174056198e" target="_blank" rel="external">http://www.jianshu.com/p/e7174056198e</a></p>
 
                 <hr>
                 
@@ -246,7 +240,7 @@
 
             <div class="hidden-xs col-sm-3 toc-col">
                 <div class="toc-wrap">
-                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Jenkins搭建Android自动化构建–安装篇"><span class="toc-text">使用Jenkins搭建Android自动化构建–安装篇</span></a></li></ol>
+                    <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#使用Jenkins搭建Android自动化构建–安装篇"><span class="toc-text">使用Jenkins搭建Android自动化构建–安装篇</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#一、环境搭建"><span class="toc-text">一、环境搭建</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#1、windows-sever-2008"><span class="toc-text">1、windows sever 2008</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2、ubuntu-12-04"><span class="toc-text">2、ubuntu 12.04</span></a></li></ol></li></ol>
                 </div>
             </div>
         </div>
@@ -267,9 +261,6 @@
                         <a href="/tags/">FEATURED TAGS</a>
                     </h5>
                     <div class="tags">
-                        
-                        <a class="tag" href="/tags/#Android"
-                           title="Android">Android</a>
                         
                         <a class="tag" href="/tags/#Jenkins"
                            title="Jenkins">Jenkins</a>

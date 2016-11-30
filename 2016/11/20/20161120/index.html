@@ -18,7 +18,7 @@
     <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.6.3/css/font-awesome.css">
     <title>
         
-        Android界面跳转传递参数封装｜Caption·Deng&#39;s blog
+        解决Android百度自动更新SDK和360自动更新SDK兼容｜Caption·Deng&#39;s blog
         
     </title>
 
@@ -145,7 +145,7 @@
         <div class="row">
             <div class="col-lg-8 col-lg-offset-2 col-md-10 col-md-offset-1 text-center">
                 <div class="post-heading">
-                    <h1>Android界面跳转传递参数封装</h1>
+                    <h1>解决Android百度自动更新SDK和360自动更新SDK兼容</h1>
                     
                     <span class="meta">
                          作者 Caption Deng
@@ -165,7 +165,7 @@
     </div>
     <div class="post-title-haojen">
         <span>
-            Android界面跳转传递参数封装
+            解决Android百度自动更新SDK和360自动更新SDK兼容
         </span>
     </div>
 </header>
@@ -178,7 +178,7 @@
             <div class="col-lg-8 col-lg-offset-1 col-sm-9 post-container">
                 <h1 id="解决Android百度自动更新SDK和360自动更新SDK兼容"><a href="#解决Android百度自动更新SDK和360自动更新SDK兼容" class="headerlink" title="解决Android百度自动更新SDK和360自动更新SDK兼容"></a>解决Android百度自动更新SDK和360自动更新SDK兼容</h1><hr>
 <p>最近上架的一个项目相序的被百度平台和360平台下架，郁闷的同时只能询问客服，得到的回复都是‘**平台的自动更新SDK会在您系统自动安装有害系统的软件，请使用本平台提供的更新SDK’，强制使用它平台的更新外还不可以兼容其他平台，对于这种行为，作为开发者只能忌于百du 360的淫威寻找其他出路。</p>
-<p>##解决方案</p>
+<p>#解决方案</p>
 <ul>
 <li>创建两个不同的Module，分别存放360更新sdk和百度更新sdk</li>
 <li>两个Module中存放着相同的包名和方法名</li>
@@ -191,7 +191,7 @@
 <p>3.写UpdateConfig是为了方便自定义传递参数的Builder，例如360的字体颜色等，到最后发现作用并不大，这里就不贴出来了。</p>
 <p>4.最后就是在App的build.gradle文件配置<br><figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div><div class="line">3</div><div class="line">4</div><div class="line">5</div><div class="line">6</div><div class="line">7</div><div class="line">8</div><div class="line">9</div><div class="line">10</div><div class="line">11</div><div class="line">12</div><div class="line">13</div></pre></td><td class="code"><pre><div class="line">android &#123;</div><div class="line">    productFlavors &#123;</div><div class="line">        _360 &#123;&#125;</div><div class="line">        baidu &#123;&#125;</div><div class="line">    &#125;</div><div class="line">    productFlavors.all &#123; flavor -&gt;</div><div class="line">        flavor.manifestPlaceholders = [UMENG_CHANNEL_VALUE: name]</div><div class="line">    &#125;</div><div class="line">&#125;</div><div class="line">dependencies &#123;</div><div class="line">    <span class="function">_360Compile <span class="title">project</span><span class="params">(<span class="string">':360updatelibrary'</span>)</span></span></div><div class="line">    baiduCompile <span class="title">project</span><span class="params">(<span class="string">':baiduupdatelibrary'</span>)</span></div><div class="line">&#125;</div></pre></td></tr></table></figure></p>
 <p>最后附上<a href="https://github.com/GHdeng/ZyThirdPartyUpdate" target="_blank" rel="external">github地址</a></p>
-<p>##Usage<br>由于我上传到Jcenter上方便调用</p>
+<p>#Usage<br>由于我上传到Jcenter上方便调用</p>
 <figure class="highlight java"><table><tr><td class="gutter"><pre><div class="line">1</div><div class="line">2</div></pre></td><td class="code"><pre><div class="line">compile <span class="string">'com.caption:360updatelibrary:0.0.2'</span></div><div class="line">compile <span class="string">'com.caption:baiduupdatelibrary:0.0.2'</span></div></pre></td></tr></table></figure>
 
                 <hr>
@@ -212,7 +212,7 @@
                 <div class="comment">
                     <div class="ds-thread"
                          data-thread-key="2016/11/20/20161120/"
-                         data-title="Android界面跳转传递参数封装"
+                         data-title="解决Android百度自动更新SDK和360自动更新SDK兼容"
                          data-url="http://ghdeng.github.io/2016/11/20/20161120/">
                     </div>
                 </div>
